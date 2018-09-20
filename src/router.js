@@ -12,6 +12,7 @@ import RecyclerView from '@/components/RecyclerView'
 import Scroller from '@/components/Scroller'
 import Waterfall from '@/components/Waterfall'
 import WebSocket from '@/components/WebSocket'
+import Storage from '@/components/Storage'
 
 Vue.use(Router)
 
@@ -75,6 +76,11 @@ module.exports = new Router({
       path: '/websocket',
       name: 'websocket',
       component: WebSocket
+    },
+    {
+      path: '/storage',
+      name: 'storage',
+      component: Storage
     }
   ]
 })

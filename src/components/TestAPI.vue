@@ -34,6 +34,9 @@
       <text class="button" @click="toWebSocket">WebSocket</text>
     </div>
     <div class="panel">
+      <text class="button" @click="storage">Storage</text>
+    </div>
+    <div class="panel">
       <text class="button" @click="nativeCall">原生交互</text>
       <text>当前系统电池电量：{{level}}</text>
       <text>当前系统电池状态：{{status}}</text>
@@ -117,8 +120,11 @@ export default {
     toWebSocket() {
       this.$router.push("websocket");
     },
+    storage() {
+      this.$router.push("storage");
+    },
     //js中const、var、let区别：
-    //1.const定义的变量不可以修改，而且必须初始化 
+    //1.const定义的变量不可以修改，而且必须初始化
     //2.var定义的变量可以修改，如果不初始化会输出undefined，不会报错
     //3.let是块级作用域，函数内部使用let定义后，对函数外部无影响
     nativeCall() {

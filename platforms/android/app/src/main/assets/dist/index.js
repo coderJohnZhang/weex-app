@@ -76,7 +76,7 @@
 
 /* weex initialized here, please do not move this line */
 var router = __webpack_require__(1);
-var App = __webpack_require__(51);
+var App = __webpack_require__(55);
 /* eslint-disable no-new */
 new Vue(Vue.util.extend({
   el: '#root',
@@ -155,10 +155,14 @@ var _WebSocket = __webpack_require__(47);
 
 var _WebSocket2 = _interopRequireDefault(_WebSocket);
 
+var _Storage = __webpack_require__(51);
+
+var _Storage2 = _interopRequireDefault(_Storage);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-Vue.use(_vueRouter2.default); /*global Vue*/
-
+/*global Vue*/
+Vue.use(_vueRouter2.default);
 
 module.exports = new _vueRouter2.default({
   routes: [{
@@ -209,6 +213,10 @@ module.exports = new _vueRouter2.default({
     path: '/websocket',
     name: 'websocket',
     component: _WebSocket2.default
+  }, {
+    path: '/storage',
+    name: 'storage',
+    component: _Storage2.default
   }]
 });
 
@@ -3012,6 +3020,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 var modal = weex.requireModule("modal");
 var batteryModule = weex.requireModule("batteryModule");
@@ -3054,6 +3065,8 @@ exports.default = {
     this.$router.push("waterfall");
   }), _defineProperty(_methods, "toWebSocket", function toWebSocket() {
     this.$router.push("websocket");
+  }), _defineProperty(_methods, "storage", function storage() {
+    this.$router.push("storage");
   }), _defineProperty(_methods, "nativeCall", function nativeCall() {
     var self = this;
     batteryModule.getBatteryLevel(function (data) {
@@ -3164,6 +3177,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.toWebSocket
     }
   }, [_vm._v("WebSocket")])]), _c('div', {
+    staticClass: ["panel"]
+  }, [_c('text', {
+    staticClass: ["button"],
+    on: {
+      "click": _vm.storage
+    }
+  }, [_vm._v("Storage")])]), _c('div', {
     staticClass: ["panel"]
   }, [_c('text', {
     staticClass: ["button"],
@@ -6128,10 +6148,10 @@ __vue_options__ = __vue_exports__ = __vue_exports__.default
 if (typeof __vue_options__ === "function") {
   __vue_options__ = __vue_options__.options
 }
-__vue_options__.__file = "E:\\Offline\\weex-app\\src\\index.vue"
+__vue_options__.__file = "E:\\Offline\\weex-app\\src\\components\\Storage.vue"
 __vue_options__.render = __vue_template__.render
 __vue_options__.staticRenderFns = __vue_template__.staticRenderFns
-__vue_options__._scopeId = "data-v-1a4d8e3c"
+__vue_options__._scopeId = "data-v-49087dca"
 __vue_options__.style = __vue_options__.style || {}
 __vue_styles__.forEach(function (module) {
   for (var name in module) {
@@ -6150,13 +6170,229 @@ module.exports = __vue_exports__
 /***/ (function(module, exports) {
 
 module.exports = {
+  "panel": {
+    "height": "100",
+    "flexDirection": "column",
+    "justifyContent": "center",
+    "borderWidth": "2",
+    "borderStyle": "solid",
+    "borderColor": "rgb(162,217,192)",
+    "backgroundColor": "rgba(162,217,192,0.2)"
+  },
+  "group": {
+    "flexDirection": "row",
+    "justifyContent": "space-between",
+    "width": "650",
+    "marginLeft": "50",
+    "marginTop": "50",
+    "marginBottom": "50"
+  },
+  "center": {
+    "justifyContent": "center"
+  },
+  "text": {
+    "fontSize": "50",
+    "textAlign": "center",
+    "paddingLeft": "25",
+    "paddingRight": "25",
+    "color": "#41b883"
+  },
+  "small": {
+    "fontSize": "32",
+    "paddingLeft": "35",
+    "paddingRight": "35",
+    "color": "#41b883"
+  }
+}
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var storage = weex.requireModule("storage");
+var modal = weex.requireModule("modal");
+
+exports.default = {
+  data: function data() {
+    return {
+      keys: "[]",
+      length: 0,
+      state: "----"
+    };
+  },
+
+  methods: {
+    setItem: function setItem() {
+      var _this = this;
+
+      storage.setItem("name", "Hanks", function (event) {
+        _this.state = "set success";
+        console.log("set success");
+      });
+    },
+    getItem: function getItem() {
+      var _this2 = this;
+
+      storage.getItem("name", function (event) {
+        console.log("get value:", event.data);
+        _this2.state = "value: " + event.data;
+      });
+    },
+    removeItem: function removeItem() {
+      var _this3 = this;
+
+      storage.removeItem("name", function (event) {
+        console.log("delete value:", event.data);
+        _this3.state = "deleted";
+      });
+    },
+    getAll: function getAll() {
+      storage.getAllKeys(function (event) {
+        // modal.toast({ message: event.result })
+        if (event.result === "success") {
+          modal.toast({
+            message: "props: " + event.data.join(", ")
+          });
+        }
+      });
+    }
+  }
+};
+
+/***/ }),
+/* 54 */
+/***/ (function(module, exports) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: ["list"]
+  }, [_c('div', {
+    staticClass: ["group", "center"]
+  }, [_c('div', {
+    staticClass: ["panel"]
+  }, [_c('text', {
+    staticClass: ["text"]
+  }, [_vm._v(_vm._s(_vm.state))])])]), _c('div', {
+    staticClass: ["group"]
+  }, [_c('div', {
+    staticClass: ["panel"]
+  }, [_c('text', {
+    staticClass: ["text"],
+    on: {
+      "click": _vm.setItem
+    }
+  }, [_vm._v("set")])]), _c('div', {
+    staticClass: ["panel"]
+  }, [_c('text', {
+    staticClass: ["text"],
+    on: {
+      "click": _vm.getItem
+    }
+  }, [_vm._v("get")])]), _c('div', {
+    staticClass: ["panel"]
+  }, [_c('text', {
+    staticClass: ["text"],
+    on: {
+      "click": _vm.removeItem
+    }
+  }, [_vm._v("remove")])]), _c('div', {
+    staticClass: ["panel"]
+  }, [_c('text', {
+    staticClass: ["text"],
+    on: {
+      "click": _vm.getAll
+    }
+  }, [_vm._v("all")])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __vue_exports__, __vue_options__
+var __vue_styles__ = []
+
+/* styles */
+__vue_styles__.push(__webpack_require__(56)
+)
+
+/* script */
+__vue_exports__ = __webpack_require__(57)
+
+/* template */
+var __vue_template__ = __webpack_require__(58)
+__vue_options__ = __vue_exports__ = __vue_exports__ || {}
+if (
+  typeof __vue_exports__.default === "object" ||
+  typeof __vue_exports__.default === "function"
+) {
+if (Object.keys(__vue_exports__).some(function (key) { return key !== "default" && key !== "__esModule" })) {console.error("named exports are not supported in *.vue files.")}
+__vue_options__ = __vue_exports__ = __vue_exports__.default
+}
+if (typeof __vue_options__ === "function") {
+  __vue_options__ = __vue_options__.options
+}
+__vue_options__.__file = "E:\\Offline\\weex-app\\src\\index.vue"
+__vue_options__.render = __vue_template__.render
+__vue_options__.staticRenderFns = __vue_template__.staticRenderFns
+__vue_options__._scopeId = "data-v-1a4d8e3c"
+__vue_options__.style = __vue_options__.style || {}
+__vue_styles__.forEach(function (module) {
+  for (var name in module) {
+    __vue_options__.style[name] = module[name]
+  }
+})
+if (typeof __register_static_styles__ === "function") {
+  __register_static_styles__(__vue_options__._scopeId, __vue_styles__)
+}
+
+module.exports = __vue_exports__
+
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
+
+module.exports = {
   "view": {
     "flex": 1
   }
 }
 
 /***/ }),
-/* 53 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6187,7 +6423,7 @@ exports.default = {
 };
 
 /***/ }),
-/* 54 */
+/* 58 */
 /***/ (function(module, exports) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
